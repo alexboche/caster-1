@@ -43,11 +43,13 @@ TARGET_CHOICE = Choice(
         "token": "TOKEN"
     })
 
-punctuation_list = [",", "'", "[", "]", "<", ">", "{", "}", "?", "–", "-", ";", "=", "/", "\\", "$"] # is this correct with the backslash?
+punctuation_list = ["`", "(", ")", ",", "'", "[", "]", "<", ">", "{", "}", "?", "–", "-", ";", "=", "/", "\\", "$", "+", "*", "%",] 
 
 def get_start_end_position(text, phrase, left_right):
     if left_right == "left":
-        if phrase in punctuation_list:
+        # if replaced phrase is a single character, don't require a word boundary ( i.e. space or beginning/end of line ) for match
+        if len(phrase)==1:
+            # phrases a single character
             pattern = re.escape(phrase)
         else:
             # the \b avoids e.g. matching 'and' in 'land' but seems to allow e.g. matching 'and' in 'hello.and'
@@ -67,11 +69,14 @@ def get_start_end_position(text, phrase, left_right):
 
 
     if left_right == "right":
-        # if replaced phrase is punctuation, don't require a word boundary for match
-        if phrase in punctuation_list:
+        # if replaced phrase is a single character, don't require a word boundary ( i.e. space or beginning/end of line ) for match
+        
+        if len(phrase) == 1:
+            # phrase is a single character
             pattern = re.escape(phrase.lower())
-        # phrase contains a word
+        
         else:
+            # phrase contains a word
             pattern = r"\b" + re.escape(phrase.lower()) + r"\b"
         match = re.search(pattern, text.lower())
         if not match:
