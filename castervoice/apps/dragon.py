@@ -85,7 +85,7 @@ class DragonRule(MergeRule):
         "scratch [<n10>]":
             R(Playback([(["scratch", "that"], 0.03)])),
         "train word":
-            R(Mimic("train", "that") + Key("a-r/200, s")),
+            R(Mimic("train", "that") + Pause("100") + Key("a-r/200, s")),
         "word train":
             R(Key("c-c/20") + Mimic("edit", "vocabulary") + Pause("100") +
                 Key("c-v/5, tab, down, up, a-t/50, enter/50, a-r/250, s/50, escape")),
