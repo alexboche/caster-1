@@ -128,8 +128,8 @@ class TextManipulation(MergeRule):
             # "ross" (i.e. "right")
         }),
         Choice("before_after", {
-            "before": "before",
-            "after": "after",
+            "(before | bef)": "before",
+            "(after | aft)": "after",
         }),
         Choice("occurrence_number", {
             "first": 1,
